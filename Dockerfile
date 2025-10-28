@@ -17,4 +17,4 @@ ENV GENERIC_TIMEZONE=Asia/Amman
 
 EXPOSE 5678
 
-CMD ["n8n", "start"]
+CMD ["tini", "--", "n8n", "start"]
