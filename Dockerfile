@@ -12,5 +12,4 @@ ENV GENERIC_TIMEZONE=Asia/Amman
 
 EXPOSE 5678
 
-ENTRYPOINT ["n8n"]
-CMD ["start"]
+CMD ["n8n", "start"]
