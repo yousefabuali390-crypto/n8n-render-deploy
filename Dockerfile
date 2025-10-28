@@ -1,11 +1,28 @@
 FROM node:18-alpine
 
-# Install n8n and create user
-RUN adduser -D -u 1000 n8nuser && \
-    npm install -g n8n@latest
+# Install dependencies
+RUN apk add --no-cache \
+    bash \
+    curl \
+    tini \
+    python3 \
+    make \
+    g++ \
+    su-exec
 
-# Switch to n8n user
-USER n8nuser
+# Create node user and directory structure first
+RUN adduser -D -u 1000 node && \
+    mkdir -p /home/node/.n8n && \
+    chown -R node:node /home/node
+
+# Switch to node user for npm installation
+USER node
+
+# Install n8n globally
+RUN npm install -g n8n@latest
+
+# Switch back to root for final setup
+USER root
 
 # Set environment variables
 ENV N8N_BASIC_AUTH_ACTIVE=true
@@ -24,4 +41,6 @@ ENV N8N_SKIP_SETTINGS_FILE_PERMISSIONS_CHECK=true
 
 EXPOSE 5678
 
+# Use tini as init system and start n8n as node user
+ENTRYPOINT ["/sbin/tini", "--", "su-exec", "node"]
 CMD ["n8n", "start"]
