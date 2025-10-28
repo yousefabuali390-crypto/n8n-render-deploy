@@ -1,6 +1,13 @@
-FROM n8nio/n8n:1.0.0
+FROM node:18-alpine
 
-# Environment variables
+# Install n8n and create user
+RUN adduser -D -u 1000 n8nuser && \
+    npm install -g n8n@latest
+
+# Switch to n8n user
+USER n8nuser
+
+# Set environment variables
 ENV N8N_BASIC_AUTH_ACTIVE=true
 ENV N8N_BASIC_AUTH_USER=admin
 ENV N8N_BASIC_AUTH_PASSWORD=admin123
