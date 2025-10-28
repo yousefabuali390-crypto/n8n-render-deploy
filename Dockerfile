@@ -1,24 +1,6 @@
-FROM node:18-alpine
+FROM n8nio/n8n:1.0.0
 
-# Install dependencies
-RUN apk add --no-cache \
-    bash \
-    curl \
-    tini \
-    python3 \
-    make \
-    g++
-
-# Install n8n globally
-RUN npm install -g n8n
-
-# Create app directory and set permissions
-RUN mkdir -p /home/node/.n8n && chown -R node:node /home/node
-
-# Switch to node user
-USER node
-
-# Set environment variables
+# Environment variables
 ENV N8N_BASIC_AUTH_ACTIVE=true
 ENV N8N_BASIC_AUTH_USER=admin
 ENV N8N_BASIC_AUTH_PASSWORD=admin123
@@ -31,9 +13,8 @@ ENV DB_TYPE=sqlite
 ENV EXECUTIONS_PROCESS=main
 ENV GENERIC_TIMEZONE=Asia/Amman
 ENV N8N_DIAGNOSTICS_ENABLED=false
+ENV N8N_SKIP_SETTINGS_FILE_PERMISSIONS_CHECK=true
 
 EXPOSE 5678
 
-# Use tini as init system
-ENTRYPOINT ["/sbin/tini", "--"]
 CMD ["n8n", "start"]
