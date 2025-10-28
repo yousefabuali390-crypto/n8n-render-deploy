@@ -11,8 +11,8 @@ ENV N8N_BASIC_AUTH_USER=admin
 ENV N8N_BASIC_AUTH_PASSWORD=admin123
 ENV N8N_PORT=5678
 ENV N8N_PROTOCOL=https
-ENV WEBHOOK_URL=https://mindsetfuel-n8n.onrender.com
-ENV N8N_EDITOR_BASE_URL=https://mindsetfuel-n8n.onrender.com
+ENV WEBHOOK_URL=https://n8n-render-deploy.onrender.com/
+ENV N8N_EDITOR_BASE_URL=https://n8n-render-deploy.onrender.com/
 ENV GENERIC_TIMEZONE=Asia/Amman
 
 # Create n8n data directory
